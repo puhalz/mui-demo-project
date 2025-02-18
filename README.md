@@ -58,7 +58,10 @@ npm run test
 ### MUI UI
 
 Using ToolPad Library
-DataGrid for user table
+
+- Language Switcher
+- Light and Dark mode
+- Search (No Functionality added yet)
 
 ### Auth 
 
@@ -89,9 +92,19 @@ Adding translation files in the following path
 public/locales/
 ```
 
+### Code Quality
+
+- Added Eslint and Typescript Eslint.
+- Prettier for code formatting 
+
 ### Unit test
 
-Using Jest for unit testing
+Using Jest for unit testing (Still working on adding more unit tests)
 
+### Work in progress
 
+ - Adding Unit tests
+ - Need to add Integration test
+ - code Refactor in UserGrid
+ - Adding a sidebar component for user edit (will a add a toggle to switch between Datagrid inline edit and side drawer) 
 
