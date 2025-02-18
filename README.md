@@ -48,9 +48,50 @@ Once the dependencies are installed, you can start the development server:
 
 This will start the application locally. Typically, it will be available at http://localhost:3000/ (or another port if specified).
 
-### Running Tests (Optional)
+### Running Tests
 If your project has tests set up, you can run them using:
 
 ```bash 
 npm run test
-  
+```  
+
+### MUI UI
+
+Using ToolPad Library
+DataGrid for user table
+
+### Auth 
+
+For Login using firebase auth.
+
+.env file can be updated with the config.
+```bash 
+VITE_FIREBASE_API_KEY=""
+VITE_FIREBASE_AUTH_DOMAIN=""
+VITE_FIREBASE_PROJECT_ID=""
+VITE_FIREBASE_STORAGE_BUCKET=""
+VITE_FIREBASE_MESSAGE_SENDER_ID=""
+VITE_FIREBASE_APP_ID=""
+```
+
+### User - Add, Edit, Delete
+ - DataGrid
+ - Using MSW for mock api
+ - Localstorage to persist the data
+
+### Translation
+
+Using i18n library
+
+Adding translation files in the following path
+
+```bash
+public/locales/
+```
+
+### Unit test
+
+Using Jest for unit testing
+
+
+
