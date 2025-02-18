@@ -21,7 +21,7 @@ import {
     GridToolbar,
     GridToolbarColumnsButton,
     GridToolbarFilterButton,
-    GridToolbarQuickFilter,
+    GridToolbarQuickFilter, GridValueFormatter,
 } from '@mui/x-data-grid'
 import { randomId, randomArrayItem } from '@mui/x-data-grid-generator'
 import { useEffect, useState } from 'react'
@@ -96,7 +96,6 @@ export default function UserDataGrid() {
         fetchUsers()
     }, [])
 
-    // @ts-ignore
     const fetchUsers = async () => {
         try {
             // Fetch user data
@@ -159,6 +158,8 @@ export default function UserDataGrid() {
     }
 
     const handleEditClick = (id: GridRowId) => () => {
+
+        console.log(rowModesModel)
         setRowModesModel({
             ...rowModesModel,
             [id]: { mode: GridRowModes.Edit },
@@ -188,16 +189,13 @@ export default function UserDataGrid() {
     }
 
     const handleCancelClick = (id: GridRowId) => () => {
+        console.log(id)
         setRowModesModel({
             ...rowModesModel,
             [id]: { mode: GridRowModes.View, ignoreModifications: true },
         })
 
-        // @ts-ignore
         const editedRow = rows.find((row) => row.id === id)
-        if (editedRow!.isNew) {
-            setRows(rows.filter((row) => row.id !== id))
-        }
     }
 
     const processRowUpdate = (newRow: GridRowModel) => {
@@ -237,6 +235,9 @@ export default function UserDataGrid() {
             width: 180,
             type: 'number',
             editable: true,
+            valueParser: (value) => {
+                return value.replace(/,/g, ''); // Remove commas
+            },
         },
         {
             field: 'mobile',
@@ -244,6 +245,9 @@ export default function UserDataGrid() {
             width: 180,
             type: 'number',
             editable: true,
+            valueParser: (value) => {
+                return value.replace(/,/g, ''); // Remove commas
+            },
         },
         {
             field: 'actions',

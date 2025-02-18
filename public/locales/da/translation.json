@@ -1,0 +1,17 @@
+{
+  "welcome": "Velkommen",
+  "Dashboard": "Dashboard",
+  "Main items": "Hovedpunkter",
+  "users": "Brugere",
+  "description": "Dette er en eksempelapplikation med i18next!",
+  "greeting": "Hej",
+  "button": "Skift Sprog",
+  "headers": {
+    "name": "Navn",
+    "role": "Afdeling",
+    "localnr": "Lokalt nr.",
+    "landline": "Fastnettelefon",
+    "mobile": "Mobiltelefon"
+  },
+  "create_user": "Opret Bruger"
+}
