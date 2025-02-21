@@ -7,6 +7,15 @@ import {
 import { firebaseAuth } from './firebaseConfig'
 
 export async function signInWithCredentials(username: string, password: string) {
+    /*return {
+        success: true,
+        user: {
+            username:"puhalz",
+            email:"puhalz@gmail.com",
+            password:"pw",
+        },
+        error: null,
+    }*/
     try {
         return setPersistence(firebaseAuth, browserSessionPersistence).then(
             async () => {

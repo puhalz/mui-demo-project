@@ -13,19 +13,25 @@ import {
     GridColDef,
     GridToolbarContainer,
     GridActionsCellItem,
-    GridEventListener,
-    GridRowId,
-    GridRowModel,
-    GridRowEditStopReasons,
     GridSlotProps,
-    GridToolbar,
     GridToolbarColumnsButton,
     GridToolbarFilterButton,
-    GridToolbarQuickFilter, GridValueFormatter,
+    GridToolbarQuickFilter,
 } from '@mui/x-data-grid'
 import { randomId, randomArrayItem } from '@mui/x-data-grid-generator'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { addUser, deleteUser, fetchUsers } from '../serviices/userApi'
+import {
+    handleCancelClick,
+    handleDeleteClick,
+    handleEditClick,
+    handleRowEditStop,
+    handleRowModesModelChange,
+    handleSaveClick,
+    processRowUpdate,
+} from '../serviices/userActions'
+import SideDrawerEdit from './SideDrawerEdit'
 
 const roles = ['Market', 'Finance', 'Development']
 const randomRole = () => {
@@ -51,7 +57,7 @@ declare module '@mui/x-data-grid' {
 
 function EditToolbar(props: GridSlotProps['toolbar']) {
     const { setRows, setRowModesModel } = props
-    const { t } = useTranslation();
+    const { t } = useTranslation()
 
     const handleClick = () => {
         const id = randomId()
@@ -71,8 +77,7 @@ function EditToolbar(props: GridSlotProps['toolbar']) {
                 display: 'flex',
                 justifyContent: 'space-between',
                 width: '100%',
-            }}
-        >
+            }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <GridToolbarQuickFilter />
                 <GridToolbarColumnsButton />
@@ -85,129 +90,55 @@ function EditToolbar(props: GridSlotProps['toolbar']) {
     )
 }
 
-export default function UserDataGrid() {
+export default function UserDataGrid({ isInlineEdit }) {
     const [rows, setRows] = React.useState(initialRows)
     const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
         {}
     )
+    const [selectedRow, setSelectedRow] = useState<any>(null)
+    const [drawerOpen, setDrawerOpen] = useState(false)
+
     const { t } = useTranslation()
 
+    const formFields = [
+        { name: 'name', label: 'Name', type: 'text' },
+        { name: 'role', label: 'Role', type: 'text' },
+        { name: 'localnr', label: 'Local Number', type: 'text' },
+        { name: 'landline', label: 'Landline', type: 'number' },
+        { name: 'mobile', label: 'Mobile', type: 'number' },
+    ]
+
     useEffect(() => {
-        fetchUsers()
+        const loadData = async () => {
+            const data = await fetchUsers() // Fetch the data using the service function
+            setRows(data) // Update the rows with the fetched data
+        }
+
+        loadData() // Call the loadData function to fetch and set rows
     }, [])
 
-    const fetchUsers = async () => {
-        try {
-            // Fetch user data
-            const response = await fetch('/api/users')
+    // Create action handlers by passing in the state setters
+    const saveClick = handleSaveClick(setRowModesModel)
+    const editClick = handleEditClick(setRowModesModel)
+    const deleteClick = handleDeleteClick(setRows)
+    const cancelClick = handleCancelClick(setRowModesModel)
 
-            // Check if the request was successful (status 200)
-            if (!response.ok) {
-                throw new Error('Failed to fetch data')
-            }
+    const onRowModesModelChange = handleRowModesModelChange(setRowModesModel)
+    const onProcessRowUpdate = processRowUpdate(setRows)
 
-            // Parse JSON data
-            const data = await response.json()
-            setRows(data) // Update rows state with the fetched data
-        } catch (err: any) {
-            // If there was an error, set the error state
-        } finally {
-            // Stop loading once the fetch process is complete
-        }
+    const handleDrawerSave = (updatedRow: any) => {
+        setRows((prevRows) =>
+            prevRows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
+        )
+        // Optionally, update your backend:
+        addUser(updatedRow)
     }
 
-    const deleteUser = async (newUser) => {
-        return fetch(`/api/users/${newUser.id}`, {
-            method: 'DELETE',
-        })
-            .then((response) => response.json())
-            .then((data) => data)
-    }
-
-    // @ts-ignore
-    const addUser = async (newUser) => {
-        try {
-            const response = await fetch('/api/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newUser),
-            })
-
-            if (response.ok) {
-                const addedUser = await response.json()
-                console.log('Added User:', addedUser)
-                fetchUsers()
-            } else {
-                const errorData = await response.json()
-                console.error('Error adding user:', errorData.error)
-            }
-        } catch (error) {
-            console.error('Error:', error)
-        }
-    }
-
-    const handleRowEditStop: GridEventListener<'rowEditStop'> = (
-        params,
-        event
-    ) => {
-        if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-            event.defaultMuiPrevented = true
-        }
-    }
-
-    const handleEditClick = (id: GridRowId) => () => {
-
-        console.log(rowModesModel)
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: { mode: GridRowModes.Edit },
-        })
-    }
-
-    const handleSaveClick = (id: GridRowId) => () => {
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: { mode: GridRowModes.View },
-        })
-    }
-
-    const handleDeleteClick = (id: GridRowId) => () => {
-        setRows(rows.filter((row) => row.id !== id))
-        // @ts-ignore
-        const rowToDelete = rows.find((row) => row.id === id)
-
-        if (!rowToDelete) return // If row doesn't exist, return
-
-        // First, optimistically remove the row from state
-        const updatedRows = rows.filter((row) => row.id !== id)
-        setRows(updatedRows)
-
-        // Call delete API (MSW intercepts the request)
-        deleteUser(rowToDelete)
-    }
-
-    const handleCancelClick = (id: GridRowId) => () => {
-        console.log(id)
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: { mode: GridRowModes.View, ignoreModifications: true },
-        })
-
-        const editedRow = rows.find((row) => row.id === id)
-    }
-
-    const processRowUpdate = (newRow: GridRowModel) => {
-        const updatedRow = { ...newRow, isNew: false }
-        setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)))
-        addUser(newRow)
-        fetchUsers()
-        return updatedRow
-    }
-
-    const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-        setRowModesModel(newRowModesModel)
+    const handleRowSelection = (id) => {
+        // Set the selected row data and open the drawer
+        const rowData = rows.find((row) => row.id === id) // Find the row based on the ID
+        setSelectedRow(rowData) // Set the selected row data
+        setDrawerOpen(true)
     }
 
     const columns: GridColDef[] = [
@@ -236,7 +167,7 @@ export default function UserDataGrid() {
             type: 'number',
             editable: true,
             valueParser: (value) => {
-                return value.replace(/,/g, ''); // Remove commas
+                return value.replace(/,/g, '') // Remove commas
             },
         },
         {
@@ -246,7 +177,7 @@ export default function UserDataGrid() {
             type: 'number',
             editable: true,
             valueParser: (value) => {
-                return value.replace(/,/g, ''); // Remove commas
+                return value.replace(/,/g, '') // Remove commas
             },
         },
         {
@@ -266,30 +197,40 @@ export default function UserDataGrid() {
                             sx={{
                                 color: 'primary.main',
                             }}
-                            onClick={handleSaveClick(id)}
+                            onClick={saveClick(id)}
                         />,
                         <GridActionsCellItem
                             icon={<CancelIcon />}
                             label="Cancel"
                             className="textPrimary"
-                            onClick={handleCancelClick(id)}
+                            onClick={cancelClick(id)}
                             color="inherit"
                         />,
                     ]
                 }
 
                 return [
-                    <GridActionsCellItem
-                        icon={<EditIcon />}
-                        label="Edit"
-                        className="textPrimary"
-                        onClick={handleEditClick(id)}
-                        color="inherit"
-                    />,
+                    isInlineEdit ? (
+                        <GridActionsCellItem
+                            icon={<EditIcon />}
+                            label="Edit"
+                            className="textPrimary"
+                            onClick={editClick(id)}
+                            color="inherit"
+                        />
+                    ) : (
+                        <GridActionsCellItem
+                            icon={<EditIcon />}
+                            label="Edit"
+                            className="textPrimary"
+                            onClick={() => handleRowSelection(id)}
+                            color="inherit"
+                        />
+                    ),
                     <GridActionsCellItem
                         icon={<DeleteIcon />}
                         label="Delete"
-                        onClick={handleDeleteClick(id)}
+                        onClick={deleteClick(id)}
                         color="inherit"
                     />,
                 ]
@@ -308,8 +249,7 @@ export default function UserDataGrid() {
                 '& .textPrimary': {
                     color: 'text.primary',
                 },
-            }}
-        >
+            }}>
             <DataGrid
                 disableDensitySelector
                 rows={rows}
@@ -317,9 +257,9 @@ export default function UserDataGrid() {
                 editMode="row"
                 rowModesModel={rowModesModel}
                 autoPageSize
-                onRowModesModelChange={handleRowModesModelChange}
+                onRowModesModelChange={onRowModesModelChange}
                 onRowEditStop={handleRowEditStop}
-                processRowUpdate={processRowUpdate}
+                processRowUpdate={onProcessRowUpdate}
                 slots={{
                     toolbar: EditToolbar,
                 }}
@@ -329,6 +269,13 @@ export default function UserDataGrid() {
                         setRowModesModel,
                     },
                 }}
+                onRowClick={(params) => params}
+            />
+            <SideDrawerEdit
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                rowData={selectedRow}
+                onSave={handleDrawerSave}
             />
         </Box>
     )

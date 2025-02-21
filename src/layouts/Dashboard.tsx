@@ -65,7 +65,7 @@ export default function Layout() {
         )
     }
 
-    if (!session) {
+   if (!session) {
         const redirectTo = `/login?callbackUrl=${encodeURIComponent(location.pathname)}`
         return <Navigate to={redirectTo} replace />
     }
