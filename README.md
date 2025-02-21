@@ -1,4 +1,4 @@
-# Project Name
+<img width="1426" alt="Screenshot 2025-02-21 at 5 06 55 PM" src="https://github.com/user-attachments/assets/b3316277-13dc-40cb-b9be-472d3acb72af" /># Project Name
 
 ## Overview
 
@@ -106,4 +106,15 @@ Using Jest for unit testing (Still working on adding more unit tests)
 
  - Adding Unit tests
  - Need to add Integration test
+
+## UI Screens
+- Login with Firebase
+<img width="1426" alt="Screenshot 2025-02-21 at 5 06 55 PM" src="https://github.com/user-attachments/assets/874899b4-35e4-4e6c-9ec6-44ccadc7b535" />
+- User Grid
+<img width="1433" alt="Screenshot 2025-02-21 at 5 07 20 PM" src="https://github.com/user-attachments/assets/b42862e9-53a8-4715-a791-c8f91537c497" />
+- Sidepanel Edit
+<img width="1434" alt="Screenshot 2025-02-21 at 5 07 30 PM" src="https://github.com/user-attachments/assets/ccc86c25-d59b-4dec-a249-c40ed0c8f15b" />
+
+  
+
 
