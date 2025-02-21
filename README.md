@@ -79,6 +79,7 @@ VITE_FIREBASE_APP_ID=""
 
 ### User - Add, Edit, Delete
  - DataGrid
+ - Added side drawer edit for the UserGrid (Toggle to switch between Inline edit and Sidepanel edit)
  - Using MSW for mock api
  - Localstorage to persist the data
 
@@ -105,6 +106,4 @@ Using Jest for unit testing (Still working on adding more unit tests)
 
  - Adding Unit tests
  - Need to add Integration test
- - code Refactor in UserGrid
- - Adding a sidebar component for user edit (will a add a toggle to switch between Datagrid inline edit and side drawer) 
 
