@@ -21,7 +21,7 @@ import {
 import { randomId, randomArrayItem } from '@mui/x-data-grid-generator'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { addUser, deleteUser, fetchUsers } from '../serviices/userApi'
+import { addUser, deleteUser, fetchUsers } from '../services/userApi'
 import {
     handleCancelClick,
     handleDeleteClick,
@@ -30,7 +30,7 @@ import {
     handleRowModesModelChange,
     handleSaveClick,
     processRowUpdate,
-} from '../serviices/userActions'
+} from '../services/userActions'
 import SideDrawerEdit from './SideDrawerEdit'
 
 const roles = ['Market', 'Finance', 'Development']
