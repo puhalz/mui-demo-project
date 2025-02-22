@@ -64,7 +64,7 @@ export default function App() {
     ]
 
     const BRANDING = {
-        title: 'mui-enterprise-app',
+        title: 'Enterprise App',
     }
 
     const AUTHENTICATION: Authentication = {
