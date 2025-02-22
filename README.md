@@ -109,11 +109,12 @@ Using Jest for unit testing (Still working on adding more unit tests)
 
 ## UI Screens
 - Login with Firebase
-<img width="1426" alt="Screenshot 2025-02-21 at 5 06 55 PM" src="https://github.com/user-attachments/assets/874899b4-35e4-4e6c-9ec6-44ccadc7b535" />
+  <img width="1435" alt="Screenshot 2025-02-22 at 4 33 54 PM" src="https://github.com/user-attachments/assets/706b4fdc-5690-46e9-8c21-9cca67912f07" />
 - User Grid
-<img width="1433" alt="Screenshot 2025-02-21 at 5 07 20 PM" src="https://github.com/user-attachments/assets/b42862e9-53a8-4715-a791-c8f91537c497" />
+  <img width="1439" alt="Screenshot 2025-02-22 at 4 34 15 PM" src="https://github.com/user-attachments/assets/212c0d95-3329-4282-a55c-e4f82e94e7d9" />
 - Sidepanel Edit
-<img width="1434" alt="Screenshot 2025-02-21 at 5 07 30 PM" src="https://github.com/user-attachments/assets/ccc86c25-d59b-4dec-a249-c40ed0c8f15b" />
+  <img width="1440" alt="Screenshot 2025-02-22 at 4 34 42 PM" src="https://github.com/user-attachments/assets/25e01e0c-aa09-4019-9a88-d291cfbc9415" />
+
 
   
 
