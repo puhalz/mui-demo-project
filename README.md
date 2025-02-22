@@ -104,7 +104,7 @@ Using Jest for unit testing (Still working on adding more unit tests)
 
 ### Work in progress
 
- - Adding Unit tests
+ - Adding more Unit tests
  - Need to add Integration test
 
 ## UI Screens
