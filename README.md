@@ -1,8 +1,9 @@
-<img width="1426" alt="Screenshot 2025-02-21 at 5 06 55 PM" src="https://github.com/user-attachments/assets/b3316277-13dc-40cb-b9be-472d3acb72af" /># Project Name
+# Project Name
+Enterprise App
 
 ## Overview
 
-This is a brief description of your project. Replace this with what your project does, the main technologies used, and any other relevant details.
+MUI Enterprise App - MUI - Typescript
 
 ## Getting Started
 
