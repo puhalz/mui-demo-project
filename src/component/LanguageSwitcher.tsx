@@ -1,6 +1,7 @@
 import { IconButton } from '@mui/material'
-import { Language } from '@mui/icons-material' // You can use this or any other flag-related icon
 import { useTranslation } from 'react-i18next'
+import Flag from 'react-world-flags'  // Import the flag component
+
 
 const LanguageSwitcher: React.FC = () => {
     const { i18n } = useTranslation()
@@ -12,8 +13,9 @@ const LanguageSwitcher: React.FC = () => {
     }
 
     return (
-        <IconButton onClick={handleLanguageChange} color="inherit" aria-label="language-switcher" >
-            <Language /> {/* Display a flag icon or a text icon */}
+        <IconButton onClick={handleLanguageChange} color="inherit" aria-label="language-switcher">
+            {/* Use the react-world-flags component with dynamic flag code */}
+            <Flag code={i18n.language === 'en' ? 'US' : 'DK'} style={{ width: 30, height: 20 }} />
         </IconButton>
     )
 }

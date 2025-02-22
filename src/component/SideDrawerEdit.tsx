@@ -14,16 +14,16 @@ interface SideDrawerEditProps {
         name: string
         role: string
         localnr?: string
-        landline?: string
-        mobile?: string
+        landline?: number
+        mobile?: number
     } | null
     onSave: (updatedRow: {
         id: string
         name: string
         role: string
         localnr?: string
-        landline?: string
-        mobile?: string
+        landline?: number
+        mobile?: number
     }) => void
 }
 

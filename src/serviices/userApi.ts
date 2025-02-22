@@ -7,8 +7,6 @@ export const fetchUsers = async () => {
         if (!response.ok) {
             throw new Error('Failed to fetch data')
         }
-
-        // Parse JSON data
         return await response.json()
     } catch (err: any) {
         // If there was an error, set the error state

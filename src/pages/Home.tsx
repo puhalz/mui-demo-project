@@ -9,6 +9,4 @@ export default function HomePage() {
     return (<>
         <Typography>{t('welcome')}</Typography>
     </>)
-
-
 }

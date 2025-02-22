@@ -38,12 +38,6 @@ const randomRole = () => {
     return randomArrayItem(roles)
 }
 
-interface User {
-    id: string
-    name: string
-    role: string
-}
-
 const initialRows: GridRowsProp = []
 
 declare module '@mui/x-data-grid' {
@@ -99,14 +93,6 @@ export default function UserDataGrid({ isInlineEdit }) {
     const [drawerOpen, setDrawerOpen] = useState(false)
 
     const { t } = useTranslation()
-
-    const formFields = [
-        { name: 'name', label: 'Name', type: 'text' },
-        { name: 'role', label: 'Role', type: 'text' },
-        { name: 'localnr', label: 'Local Number', type: 'text' },
-        { name: 'landline', label: 'Landline', type: 'number' },
-        { name: 'mobile', label: 'Mobile', type: 'number' },
-    ]
 
     useEffect(() => {
         const loadData = async () => {

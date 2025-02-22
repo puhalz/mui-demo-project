@@ -1,6 +1,5 @@
 import * as React from 'react';
 import UserDataGrid from "../component/UserDataGrid";
-import EditUser from '../component/SideDrawerEdit'
 import { useState } from 'react'
 import { Switch } from '@mui/material'
 

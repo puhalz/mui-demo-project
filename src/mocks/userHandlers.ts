@@ -4,6 +4,7 @@ interface User {
     id: number
     name: string
     role: string
+
 }
 
 // Function to get users from localStorage
